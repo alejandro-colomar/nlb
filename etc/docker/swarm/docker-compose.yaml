@@ -4,25 +4,25 @@
 #########################################################################
 
 configs:
-  nlb:
-    file: /run/configs/etc/nginx/conf.d/nlb.conf
+    nlb:
+        file: /run/configs/etc/nginx/conf.d/nlb.conf
 services:
-  nlb:
-    configs:
-    - 
-      mode: 0440
-      source: nlb
-      target: /etc/nginx/conf.d/nlb.conf
-    deploy:
-      placement:
-        constraints:
-        - node.role == worker
-      replicas: 1
-    image: "secobau/nginx:1.0@sha256:4d0ea3dc3cac90fa4a9ddbc4140f8b34e50df246760b4180818fcbae3f1ab90f"
-    ports:
-    - "6443:6443"
-    volumes:
-    - nlb:/var/log/nginx
+    nlb:
+        configs:
+        -
+            mode: 0440
+            source: nlb
+            target: /etc/nginx/conf.d/nlb.conf
+        deploy:
+            placement:
+                constraints:
+                - node.role == worker
+            replicas: 1
+        image: "secobau/nginx:1.0@sha256:4d0ea3dc3cac90fa4a9ddbc4140f8b34e50df246760b4180818fcbae3f1ab90f"
+        ports:
+        -   "6443:6443"
+        volumes:
+        -   nlb:/var/log/nginx
 version: '3.8'
 volumes:
-  nlb:
+    nlb:
