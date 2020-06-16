@@ -18,7 +18,7 @@ Start working in a new branch
 .. code-block:: BASH
 
 	git checkout -b <branch>;
-	./bin/release/port.sh 32443;
+	./bin/release/port.sh ??443;
 	git commit -a -m "Branch $(git branch --show-current)";
 
 Pre-release an experimental version
@@ -29,7 +29,7 @@ Experimental pre-releases are named ending with ``-aX`` or ``-bX``.
 .. code-block:: BASH
 
 	exp_version=<exp-version>;
-	./bin/release/port.sh 32443;
+	./bin/release/port.sh ??443;
 	git commit -a -m "Pre-release ${exp_version}";
 	git tag ${exp_version};
 
@@ -41,7 +41,7 @@ Release-critical pre-releases are named ending with ``-rcX``.
 .. code-block:: BASH
 
 	rc_version=<rc-version>;
-	./bin/release/port.sh 31443;
+	./bin/release/port.sh ?443;
 	git commit -a -m "Pre-release ${rc_version}";
 	git tag -a ${rc_version} -m "";
 
@@ -51,7 +51,7 @@ Release a stable version
 .. code-block:: BASH
 
 	version=<version>;
-	./bin/release/port.sh 30443;
+	./bin/release/port.sh 6443;
 	git commit -a -m "Release ${version}";
 	git tag -a ${version} -m "";
 
@@ -60,7 +60,7 @@ Continue working in the current branch after a release
 
 .. code-block:: BASH
 
-	./bin/release/port.sh 32443;
+	./bin/release/port.sh ??443;
 	git commit -a -m "Branch $(git branch --show-current)";
 
 
@@ -75,18 +75,18 @@ swarm.
 
 _`parent repository`: https://github.com/alejandro-colomar/alejandro-colomar.git
 
-Releases use port 30443.
-Release-critical pre-releases use port 31443.
-Experimental deployments use ports 32443.
+Releases use port 6443.
+Release-critical pre-releases use port ?443.
+Experimental deployments use ports ??443.
 
 For a seamless deployment, the following steps need to be done:
 
-- Assuming there is an old stack deployed at port 30443.
+- Assuming there is an old stack deployed at port 6443.
 
 - Release a release-critical pre-release (see
   `Pre-release a release-critical version`_).
 
-- Deploy the release-critical pre-release at port 31443:
+- Deploy the release-critical pre-release at port ?443:
 
 .. code-block:: BASH
 
@@ -107,20 +107,20 @@ For a seamless deployment, the following steps need to be done:
 
 
 - Else, if the pre-release passes the tests, the published port will
-  be forwarded to 31443 (this is done in the parent repository).
+  be forwarded to ?443 (this is done in the parent repository).
 
 - Release a new stable version (see `Release a stable version`_).
 
-- Deploy the stable release at port 30443:
+- Deploy the stable release at port 6443:
 
 .. code-block:: BASH
 
 	sudo ./bin/deploy/deploy.sh;
 
-- The published port will be forwarded back to 30443 (this is done in
+- The published port will be forwarded back to 6443 (this is done in
   the parent repository).
 
-- Remove the deployment at port 31443:
+- Remove the deployment at port ?443:
 
 .. code-block:: BASH
 
