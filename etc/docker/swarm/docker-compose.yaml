@@ -33,7 +33,7 @@ services:
             replicas: 1
         image: "alejandrocolomar/nginx:1.5.2"
         ports:
-        -   "32443:6443"
+        -   "6443:6443"
         volumes:
         -   nlb:/var/log/nginx
 
