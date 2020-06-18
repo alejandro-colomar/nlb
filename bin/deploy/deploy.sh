@@ -30,7 +30,7 @@ COMPOSE_FNAME="etc/docker/swarm/docker-compose.yaml";
 ################################################################################
 function deploy_stack()
 {
-	local	version="$(dit describe --tags)";
+	local	version="$(git describe --tags)";
 	local	stack_name="nlb_${version}";
 
 	docker deploy -c "${COMPOSE_FNAME}" ${stack_name}
