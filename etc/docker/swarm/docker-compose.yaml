@@ -7,9 +7,9 @@ configs:
     nginx_conf:
         file: /run/configs/nlb/etc/nginx/nginx.conf
     nginx_conf_nlb:
-        file: /run/configs/nlb/etc/nginx/conf.d/configs/nlb.conf
+        file: /run/configs/nlb/etc/nginx/conf.d/nlb.conf
     nginx_conf_security-parameters:
-        file: /run/configs/nlb/etc/nginx/conf.d/configs/security-parameters.conf
+        file: /run/configs/nlb/etc/nginx/conf.d/security-parameters.conf
 
 services:
     nlb:
@@ -25,13 +25,13 @@ services:
         -
             mode: 0440
             source: nginx_conf_security-parameters
-            target: /etc/nginx/conf.d/configs/security-parameters.conf
+            target: /etc/nginx/conf.d/security-parameters.conf
         deploy:
             placement:
                 constraints:
                 -   node.role == worker
             replicas: 1
-        image: "alejandrocolomar/nginx:1.5.2"
+        image: "alejandrocolomar/nginx:1.6.1"
         ports:
         -   "6443:6443"
         volumes:
