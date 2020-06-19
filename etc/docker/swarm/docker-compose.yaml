@@ -8,8 +8,6 @@ configs:
         file: /run/configs/nlb/etc/nginx/nginx.conf
     nginx_conf_nlb:
         file: /run/configs/nlb/etc/nginx/conf.d/nlb.conf
-    nginx_conf_security-parameters:
-        file: /run/configs/nlb/etc/nginx/conf.d/security-parameters.conf
 
 services:
     nlb:
@@ -22,10 +20,6 @@ services:
             mode: 0440
             source: nginx_conf_nlb
             target: /etc/nginx/conf.d/nlb.conf
-        -
-            mode: 0440
-            source: nginx_conf_security-parameters
-            target: /etc/nginx/conf.d/security-parameters.conf
         deploy:
             placement:
                 constraints:
