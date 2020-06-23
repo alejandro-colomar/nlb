@@ -8,6 +8,16 @@ configs:
         file: /run/configs/nlb/etc/nginx/nginx.conf
     nginx_conf_nlb:
         file: /run/configs/nlb/etc/nginx/conf.d/nlb.conf
+    nginx_conf_www_ports_exp:
+        file: /run/configs/nlb/etc/nginx/conf.d/www_ports_exp.conf
+    nginx_conf_www_ports_rc:
+        file: /run/configs/nlb/etc/nginx/conf.d/www_ports_rc.conf
+    nginx_conf_www_ports_stable:
+        file: /run/configs/nlb/etc/nginx/conf.d/www_ports_stable.conf
+    nginx_conf_www_rc:
+        file: /run/configs/nlb/etc/nginx/conf.d/www_rc.conf
+    nginx_conf_www_stable:
+        file: /run/configs/nlb/etc/nginx/conf.d/www_stable.conf
 
 services:
     nlb:
@@ -19,7 +29,30 @@ services:
         -
             mode: 0440
             source: nginx_conf_nlb
-            target: /etc/nginx/conf.d/nlb.conf
+        -
+            mode: 0440
+            source: nginx_conf_www_ports_exp
+            target: /etc/nginx/conf.d/www_ports_exp.conf
+        -
+            mode: 0440
+            source: nginx_conf_www_ports_rc
+            target: /etc/nginx/conf.d/www_ports_rc.conf
+        -
+            mode: 0440
+            source: nginx_conf_www_ports_stable
+            target: /etc/nginx/conf.d/www_ports_stable.conf
+        -
+            mode: 0440
+            source: nginx_conf_www_rc
+            target: /etc/nginx/conf.d/www_rc.conf
+        -
+            mode: 0440
+            source: nginx_conf_www_stable
+            target: /etc/nginx/conf.d/www_stable.conf
+        -
+            mode: 0440
+            source: nginx_conf_www_stable
+            target: /etc/nginx/conf.d/www.conf
         deploy:
             placement:
                 constraints:
@@ -27,7 +60,9 @@ services:
             replicas: 1
         image: "alejandrocolomar/nginx:1.6.1"
         ports:
-        -   "6443:6443"
+        -   "30080:30080"
+        -   "31080:31080"
+        -   "32080:32080"
         volumes:
         -   nlb:/var/log/nginx
 
