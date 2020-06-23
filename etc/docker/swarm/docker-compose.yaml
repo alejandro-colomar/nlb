@@ -59,6 +59,7 @@ services:
                 -   node.role == worker
             replicas: 1
         image: "alejandrocolomar/nginx:1.6.1"
+        network: "alejandro-colomar"
         ports:
         -   "30080:30080"
         -   "31080:31080"
