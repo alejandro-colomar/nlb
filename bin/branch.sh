@@ -1,12 +1,16 @@
 #!/bin/bash -x
-##	./bin/deploy.sh
+##	./bin/branch.sh
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Deploy stack
-## ============
+## Prepare a branch
+## ================
+##
+##  - Update version number
+##  - Update exposed port
+##  - Update stack name
 ##
 ################################################################################
 
@@ -16,7 +20,7 @@
 ################################################################################
 source	lib/libalx/sh/sysexits.sh;
 
-source	etc/nlb/config.sh;
+source	etc/www/config.sh;
 
 
 ################################################################################
@@ -28,12 +32,6 @@ ARGC=0;
 ################################################################################
 ##	functions							      ##
 ################################################################################
-function deploy_stack()
-{
-	local	stack_name="${NLB_STACK_BASENAME}_${WWW_STABILITY}";
-
-	docker deploy -c "${NLB_COMPOSE_FNAME}" ${stack_name}
-}
 
 
 ################################################################################
@@ -41,9 +39,13 @@ function deploy_stack()
 ################################################################################
 function main()
 {
+	local	branch="$(git branch --show-current)";
 
-	./bin/deploy/config.sh;
-	deploy_stack;
+	./bin/release/port.sh		${NLB_PORT_EXP};
+	./bin/release/stability.sh	"exp";
+	./bin/release/version.sh;
+
+	git commit -a -m "Branch: ${branch}";
 }
 
 

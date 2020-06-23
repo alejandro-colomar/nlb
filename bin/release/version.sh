@@ -1,12 +1,18 @@
 #!/bin/bash -x
-##	./bin/deploy.sh
+##	./bin/release/version.sh	[<version>]
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Deploy stack
-## ============
+## Update version numbers
+## ======================
+##
+## This script should be run just after a new branch has been created, a
+## release is imminent, or a release has been made.
+## The default value for the version is the branch name.
+##
+##  - Update version numbers
 ##
 ################################################################################
 
@@ -16,23 +22,24 @@
 ################################################################################
 source	lib/libalx/sh/sysexits.sh;
 
-source	etc/nlb/config.sh;
-
 
 ################################################################################
 ##	definitions							      ##
 ################################################################################
-ARGC=0;
+MAX_ARGC=1;
 
 
 ################################################################################
 ##	functions							      ##
 ################################################################################
-function deploy_stack()
+function update_version()
 {
-	local	stack_name="${NLB_STACK_BASENAME}_${WWW_STABILITY}";
+	local	version="$1";
 
-	docker deploy -c "${NLB_COMPOSE_FNAME}" ${stack_name}
+	sed "/alejandrocolomar\/www:/s/www:.*\"/www:${version}\"/"	\
+		-i ./etc/docker/swarm/docker-compose.yaml;
+	sed "/WWW_VERSION=/s/\".*\"\;/\"${version}\"\;/"		\
+		-i ./etc/www/config.sh;
 }
 
 
@@ -41,9 +48,14 @@ function deploy_stack()
 ################################################################################
 function main()
 {
+	local	version="$1";
+	local	argc="$2";
 
-	./bin/deploy/config.sh;
-	deploy_stack;
+	if [ ${argc} -eq 0 ]; then
+		version="$(git branch --show-current)";
+	fi
+
+	update_version	"${version}";
 }
 
 
@@ -51,12 +63,12 @@ function main()
 ##	run								      ##
 ################################################################################
 argc=$#;
-if [ ${argc} -ne ${ARGC} ]; then
-	echo	"Illegal number of parameters (Requires ${ARGC})";
+if [ ${argc} -gt ${MAX_ARGC} ]; then
+	echo	"Illegal number of parameters (Accepts ${MAX_ARGC} or less)";
 	exit	${EX_USAGE};
 fi
 
-main;
+main	"$1" "${argc}";
 
 
 ################################################################################

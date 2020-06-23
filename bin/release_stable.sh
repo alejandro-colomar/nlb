@@ -1,12 +1,16 @@
 #!/bin/bash -x
-##	./bin/deploy.sh
+##	./bin/release_stable.sh	<version>
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Deploy stack
-## ============
+## Release a stable version
+## ========================
+##
+##  - Update version number
+##  - Update exposed port
+##  - Update stack name
 ##
 ################################################################################
 
@@ -16,24 +20,18 @@
 ################################################################################
 source	lib/libalx/sh/sysexits.sh;
 
-source	etc/nlb/config.sh;
+source	etc/www/config.sh;
 
 
 ################################################################################
 ##	definitions							      ##
 ################################################################################
-ARGC=0;
+ARGC=1;
 
 
 ################################################################################
 ##	functions							      ##
 ################################################################################
-function deploy_stack()
-{
-	local	stack_name="${NLB_STACK_BASENAME}_${WWW_STABILITY}";
-
-	docker deploy -c "${NLB_COMPOSE_FNAME}" ${stack_name}
-}
 
 
 ################################################################################
@@ -41,9 +39,14 @@ function deploy_stack()
 ################################################################################
 function main()
 {
+	local	version="$1";
 
-	./bin/deploy/config.sh;
-	deploy_stack;
+	./bin/release/port.sh		${NLB_PORT_STABLE};
+	./bin/release/stability.sh	"stable";
+	./bin/release/version.sh	"${version}";
+
+	git commit -a -m "Release ${version}";
+	git tag -a ${version} -m "";
 }
 
 
@@ -56,7 +59,7 @@ if [ ${argc} -ne ${ARGC} ]; then
 	exit	${EX_USAGE};
 fi
 
-main;
+main	"$1";
 
 
 ################################################################################

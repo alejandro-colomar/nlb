@@ -1,12 +1,12 @@
 #!/bin/bash -x
-##	./bin/deploy.sh
+##	./bin/deploy/delete_stack_stable.sh
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Deploy stack
-## ============
+## Delete stable stack
+## ===================
 ##
 ################################################################################
 
@@ -15,8 +15,6 @@
 ##	source								      ##
 ################################################################################
 source	lib/libalx/sh/sysexits.sh;
-
-source	etc/nlb/config.sh;
 
 
 ################################################################################
@@ -28,12 +26,6 @@ ARGC=0;
 ################################################################################
 ##	functions							      ##
 ################################################################################
-function deploy_stack()
-{
-	local	stack_name="${NLB_STACK_BASENAME}_${WWW_STABILITY}";
-
-	docker deploy -c "${NLB_COMPOSE_FNAME}" ${stack_name}
-}
 
 
 ################################################################################
@@ -42,8 +34,7 @@ function deploy_stack()
 function main()
 {
 
-	./bin/deploy/config.sh;
-	deploy_stack;
+	./bin/deploy/delete_stack.sh	"stable";
 }
 
 

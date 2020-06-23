@@ -1,11 +1,11 @@
 #!/bin/bash -x
-##	./bin/deploy.sh
+##	./bin/deploy/delete_stack.sh	"<stability>"
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Deploy stack
+## Delete stack
 ## ============
 ##
 ################################################################################
@@ -16,23 +16,24 @@
 ################################################################################
 source	lib/libalx/sh/sysexits.sh;
 
-source	etc/nlb/config.sh;
+source	etc/www/config.sh;
 
 
 ################################################################################
 ##	definitions							      ##
 ################################################################################
-ARGC=0;
+ARGC=1;
 
 
 ################################################################################
 ##	functions							      ##
 ################################################################################
-function deploy_stack()
+function delete_stack()
 {
-	local	stack_name="${NLB_STACK_BASENAME}_${WWW_STABILITY}";
+	local	stability="$1";
+	local	stack_name="${NLB_STACK_BASENAME}_${stability}";
 
-	docker deploy -c "${NLB_COMPOSE_FNAME}" ${stack_name}
+	docker stack rm "${stack_name}";
 }
 
 
@@ -42,8 +43,7 @@ function deploy_stack()
 function main()
 {
 
-	./bin/deploy/config.sh;
-	deploy_stack;
+	delete_stack	"$1";
 }
 
 
@@ -56,7 +56,7 @@ if [ ${argc} -ne ${ARGC} ]; then
 	exit	${EX_USAGE};
 fi
 
-main;
+main	"$1";
 
 
 ################################################################################
