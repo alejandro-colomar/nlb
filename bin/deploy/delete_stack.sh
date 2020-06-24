@@ -22,7 +22,7 @@ source	etc/www/config.sh;
 ################################################################################
 ##	definitions							      ##
 ################################################################################
-ARGC=1;
+ARGC=0;
 
 
 ################################################################################
@@ -30,10 +30,8 @@ ARGC=1;
 ################################################################################
 function delete_stack()
 {
-	local	stability="$1";
-	local	stack_name="${NLB_STACK_BASENAME}_${stability}";
 
-	docker stack rm "${stack_name}";
+	docker stack rm "${NLB_STACK_BASENAME}";
 }
 
 
@@ -43,7 +41,7 @@ function delete_stack()
 function main()
 {
 
-	delete_stack	"$1";
+	delete_stack;
 }
 
 
@@ -56,7 +54,7 @@ if [ ${argc} -ne ${ARGC} ]; then
 	exit	${EX_USAGE};
 fi
 
-main	"$1";
+main;
 
 
 ################################################################################
