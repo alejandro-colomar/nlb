@@ -1,6 +1,5 @@
-|test|
+.. image:: https://img.shields.io/github/v/release/alejandro-colomar/nlb?style=social   :alt: GitHub release (latest by date)
 
-.. |test| image:: https://github.com/alejandro-colomar/nlb/workflows/CI/badge.svg?branch=v0.2&event=release
 
 NginX network load balancer for `<alejandro-colomar.es>`.
 
