@@ -51,7 +51,7 @@ services:
             placement:
                 constraints:
                 -   node.role == worker
-            replicas: 1
+            replicas: 3
         image: "alejandrocolomar/nginx:1.6.1"
         networks:
         -
