@@ -1,4 +1,4 @@
-.. image:: https://github.com/alejandro-colomar/nlb/workflows/CI/badge.svg
+.. image:: https://github.com/alejandro-colomar/nlb/workflows/CI/badge.svg?branch=master
 
 NginX network load balancer for `<alejandro-colomar.es>`.
 
