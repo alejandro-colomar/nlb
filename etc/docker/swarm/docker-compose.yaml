@@ -1,7 +1,8 @@
-#########################################################################
-#      Copyright (C) 2020        Sebastian Francisco Colomar Bauza      #
-#      SPDX-License-Identifier:  GPL-2.0-only                           #
-#########################################################################
+################################################################################
+##      Copyright (C) 2020        Sebastian Francisco Colomar Bauza           ##
+##      Copyright (C) 2020        Alejandro Colomar Andres                    ##
+##      SPDX-License-Identifier:  GPL-2.0-only                                ##
+################################################################################
 
 configs:
     nginx_conf:
@@ -14,9 +15,7 @@ configs:
         file: /run/configs/nlb/etc/nginx/conf.d/www_ports_rc.conf
     nginx_conf_www_ports_stable:
         file: /run/configs/nlb/etc/nginx/conf.d/www_ports_stable.conf
-    nginx_conf_www_rc:
-        file: /run/configs/nlb/etc/nginx/conf.d/www_rc.conf
-    nginx_conf_www_stable:
+    nginx_conf_www:
         file: /run/configs/nlb/etc/nginx/conf.d/www_stable.conf
 
 services:
@@ -43,15 +42,7 @@ services:
             target: /etc/nginx/conf.d/www_ports_stable.conf
         -
             mode: 0440
-            source: nginx_conf_www_rc
-            target: /etc/nginx/conf.d/www_rc.conf
-        -
-            mode: 0440
-            source: nginx_conf_www_stable
-            target: /etc/nginx/conf.d/www_stable.conf
-        -
-            mode: 0440
-            source: nginx_conf_www_stable
+            source: nginx_conf_www
             target: /etc/nginx/conf.d/www.conf
         deploy:
             placement:
