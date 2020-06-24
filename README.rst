@@ -1,5 +1,4 @@
-.. image:: https://img.shields.io/github/v/release/alejandro-colomar/nlb?style=social   :alt: GitHub release (latest by date)
-
+.. image:: https://img.shields.io/github/v/release/alejandro-colomar/nlb?color=Green   :alt: GitHub release (latest by date)
 
 NginX network load balancer for `<alejandro-colomar.es>`.
 
