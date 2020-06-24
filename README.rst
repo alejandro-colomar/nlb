@@ -1,6 +1,4 @@
-.. image:: https://github.com/alejandro-colomar/nlb/workflows/CI/badge.svg?branch=master&event=pull_request   
-
-.. image:: https://img.shields.io/github/v/release/alejandro-colomar/nlb?label=stable%20release   
+.. image:: https://github.com/alejandro-colomar/nlb/workflows/CI/badge.svg
 
 NginX network load balancer for `<alejandro-colomar.es>`.
 
