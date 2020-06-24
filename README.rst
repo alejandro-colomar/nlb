@@ -1,6 +1,6 @@
 |CI|
 
-.. |CI| image:: https://github.com/alejandro-colomar/nlb/workflows/CI/badge.svg?branch=master&event=release
+.. |CI| image:: https://github.com/alejandro-colomar/nlb/workflows/CI/badge.svg?branch=v0.2&event=release
     :alt: CI
     :scale: 100%
 
