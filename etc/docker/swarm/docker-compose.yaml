@@ -18,6 +18,9 @@ configs:
     nginx_conf_www:
         file: /run/configs/nlb/etc/nginx/conf.d/www_stable.conf
 
+networks:
+    alejandro-colomar:
+
 services:
     nlb:
         configs:
@@ -50,7 +53,9 @@ services:
                 -   node.role == worker
             replicas: 1
         image: "alejandrocolomar/nginx:1.6.1"
-        network: "alejandro-colomar"
+        networks:
+        -
+            "alejandro-colomar"
         ports:
         -   "30080:30080"
         -   "31080:31080"
