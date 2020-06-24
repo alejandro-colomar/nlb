@@ -1,3 +1,9 @@
+|CI|
+
+.. |CI| image:: https://github.com/alejandro-colomar/nlb/workflows/CI/badge.svg
+    :alt: CI
+    :scale: 100%
+
 NginX network load balancer for `<alejandro-colomar.es>`.
 
 
