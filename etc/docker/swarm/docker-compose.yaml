@@ -31,6 +31,7 @@ services:
         -
             mode: 0440
             source: nginx_conf_nlb
+            target: /etc/nginx/conf.d/nlb.conf
         -
             mode: 0440
             source: nginx_conf_www_ports_exp
