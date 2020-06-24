@@ -32,7 +32,7 @@ function deploy_stack()
 {
 	local	stack_name="${NLB_STACK_BASENAME}_${NLB_STABILITY}";
 
-	docker deploy -c "${NLB_COMPOSE_FNAME}" ${stack_name}
+	docker stack deploy -c "${NLB_COMPOSE_FPATH}" ${stack_name}
 }
 
 
