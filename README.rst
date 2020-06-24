@@ -1,8 +1,6 @@
-|CI|
+|v0.2|
 
-.. |CI| image:: https://github.com/alejandro-colomar/nlb/workflows/CI/badge.svg?branch=v0.2&event=release
-    :alt: v0.2
-    :scale: 100%
+.. |v0.2| image:: https://github.com/alejandro-colomar/nlb/workflows/CI/badge.svg?branch=v0.2&event=release
 
 NginX network load balancer for `<alejandro-colomar.es>`.
 
