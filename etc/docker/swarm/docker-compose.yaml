@@ -27,33 +27,33 @@ services:
         -
             mode: 0440
             source: nginx_conf
-            target: /etc/nginx/nginx.conf
+            target: /usr/local/etc/nginx/nginx.conf
         -
             mode: 0440
             source: nginx_conf_nlb
-            target: /etc/nginx/conf.d/nlb.conf
+            target: /usr/local/etc/nginx/conf.d/nlb.conf
         -
             mode: 0440
             source: nginx_conf_www_ports_exp
-            target: /etc/nginx/conf.d/www_ports_exp.conf
+            target: /usr/local/etc/nginx/conf.d/www_ports_exp.conf
         -
             mode: 0440
             source: nginx_conf_www_ports_rc
-            target: /etc/nginx/conf.d/www_ports_rc.conf
+            target: /usr/local/etc/nginx/conf.d/www_ports_rc.conf
         -
             mode: 0440
             source: nginx_conf_www_ports_stable
-            target: /etc/nginx/conf.d/www_ports_stable.conf
+            target: /usr/local/etc/nginx/conf.d/www_ports_stable.conf
         -
             mode: 0440
             source: nginx_conf_www
-            target: /etc/nginx/conf.d/www.conf
+            target: /usr/local/etc/nginx/conf.d/www.conf
         deploy:
             placement:
                 constraints:
                 -   node.role == worker
             replicas: 3
-        image: "alejandrocolomar/nginx:1.6.1"
+        image: "alejandrocolomar/nginx:1.7.0"
         networks:
         -
             "alejandro-colomar"
