@@ -28,7 +28,7 @@ ARGC=2;
 ################################################################################
 function update_compose()
 {
-	local	stack_basename"$1";
+	local	stack_basename="$1";
 	local	stability="$2";
 
 
@@ -42,7 +42,7 @@ function update_compose()
 ################################################################################
 function main()
 {
-	local	stack_basename"$1";
+	local	stack_basename="$1";
 	local	stability="$2";
 
 	update_compose	${stack_basename} ${stability}
