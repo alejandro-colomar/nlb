@@ -1,12 +1,12 @@
 #!/bin/bash -x
-##	./bin/deploy/config.sh
+##	sudo ./bin/deploy/common/switch.sh	<stack_basename> <stability>
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Copy configs and secrets into /run/
-## ===================================
+## Switch ${stack_basename} public port to ${stability}
+## ====================================================
 ##
 ################################################################################
 
@@ -16,28 +16,26 @@
 ################################################################################
 source	lib/libalx/sh/sysexits.sh;
 
+source	etc/www/config.sh;
+
 
 ################################################################################
 ##	definitions							      ##
 ################################################################################
-ARGC=0;
+ARGC=2;
 
 
 ################################################################################
 ##	functions							      ##
 ################################################################################
-function prepare_configs()
+function update_compose()
 {
+	local	stack_basename="$1";
+	local	stability="$2";
 
-	mkdir -pv	/run/configs/;
-	cp -rfvT	run/configs/nlb/	/run/configs/nlb;
-}
 
-function prepare_secrets()
-{
-
-	mkdir -pv	/run/secrets/;
-	cp -rfvT	run/secrets/nlb/	/run/secrets/nlb;
+	sed "/nginx_conf_${stack_basename}\:/{n;s/_.*\./_${stability}\./}" \
+		-i ./etc/docker/swarm/docker-compose.yaml;
 }
 
 
@@ -46,9 +44,12 @@ function prepare_secrets()
 ################################################################################
 function main()
 {
+	local	stack_basename="$1";
+	local	stability="$2";
 
-	prepare_configs;
-	prepare_secrets;
+	update_compose	${stack_basename} ${stability}
+	./bin/deploy/delete.sh
+	./bin/deploy/deploy.sh;
 }
 
 
@@ -61,7 +62,7 @@ if [ ${argc} -ne ${ARGC} ]; then
 	exit	${EX_USAGE};
 fi
 
-main;
+main	"$1"	"$2";
 
 
 ################################################################################

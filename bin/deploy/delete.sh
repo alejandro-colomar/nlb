@@ -1,12 +1,12 @@
 #!/bin/bash -x
-##	./bin/deploy/switch.sh	<stack_basename> <stability>
+##	./bin/deploy/delete.sh	"<stability>"
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Switch ${stack_basename} public port to ${stability}
-## ====================================================
+## Delete stack
+## ============
 ##
 ################################################################################
 
@@ -22,20 +22,16 @@ source	etc/www/config.sh;
 ################################################################################
 ##	definitions							      ##
 ################################################################################
-ARGC=2;
+ARGC=0;
 
 
 ################################################################################
 ##	functions							      ##
 ################################################################################
-function update_compose()
+function delete_stack()
 {
-	local	stack_basename="$1";
-	local	stability="$2";
 
-
-	sed "/nginx_conf_${stack_basename}\:/{n;s/_.*\./_${stability}\./}" \
-		-i ./etc/docker/swarm/docker-compose.yaml;
+	docker stack rm "${NLB_STACK_BASENAME}";
 }
 
 
@@ -44,12 +40,8 @@ function update_compose()
 ################################################################################
 function main()
 {
-	local	stack_basename="$1";
-	local	stability="$2";
 
-	update_compose	${stack_basename} ${stability}
-	./bin/deploy/delete_stack.sh
-	./bin/deploy/deploy.sh;
+	delete_stack;
 }
 
 
@@ -62,7 +54,7 @@ if [ ${argc} -ne ${ARGC} ]; then
 	exit	${EX_USAGE};
 fi
 
-main	"$1"	"$2";
+main;
 
 
 ################################################################################

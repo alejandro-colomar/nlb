@@ -1,5 +1,5 @@
 #!/bin/bash -x
-##	./bin/deploy.sh
+##	sudo ./bin/deploy.sh
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
@@ -41,7 +41,7 @@ function deploy_stack()
 function main()
 {
 
-	./bin/deploy/config.sh;
+	./bin/deploy/common/config.sh;
 	deploy_stack;
 }
 

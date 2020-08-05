@@ -1,12 +1,12 @@
 #!/bin/bash -x
-##	./bin/deploy/delete_stack_rc.sh
+##	sudo ./bin/deploy/common/config.sh
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Delete rc stack
-## ===============
+## Copy configs and secrets into /run/
+## ===================================
 ##
 ################################################################################
 
@@ -26,6 +26,19 @@ ARGC=0;
 ################################################################################
 ##	functions							      ##
 ################################################################################
+function prepare_configs()
+{
+
+	mkdir -pv	/run/configs/;
+	cp -rfvT	run/configs/nlb/	/run/configs/nlb;
+}
+
+function prepare_secrets()
+{
+
+	mkdir -pv	/run/secrets/;
+	cp -rfvT	run/secrets/nlb/	/run/secrets/nlb;
+}
 
 
 ################################################################################
@@ -34,7 +47,8 @@ ARGC=0;
 function main()
 {
 
-	./bin/deploy/delete_stack.sh	"rc";
+	prepare_configs;
+	prepare_secrets;
 }
 
 

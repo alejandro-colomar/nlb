@@ -1,5 +1,5 @@
 #!/bin/bash -x
-##	./bin/deploy/switch_www_rc.sh
+##	sudo ./bin/deploy/switch_www_rc.sh
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
@@ -34,7 +34,7 @@ ARGC=0;
 function main()
 {
 
-	./bin/deploy/switch.sh	"www" "rc";
+	./bin/deploy/common/switch.sh	"www" "rc";
 }
 
 
