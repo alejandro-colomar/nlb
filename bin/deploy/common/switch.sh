@@ -48,7 +48,7 @@ function main()
 	local	stability="$2";
 
 	update_compose	${stack_basename} ${stability}
-	./bin/deploy/delete.sh
+	./bin/deploy/delete.sh;
 	./bin/deploy/deploy.sh;
 }
 
