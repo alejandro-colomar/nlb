@@ -16,6 +16,8 @@
 ################################################################################
 source	lib/libalx/sh/sysexits.sh;
 
+source	etc/www/config.sh;
+
 
 ################################################################################
 ##	definitions							      ##
@@ -46,6 +48,7 @@ function main()
 	local	stability="$2";
 
 	update_compose	${stack_basename} ${stability}
+	./bin/deploy/delete_stack.sh
 	./bin/deploy/deploy.sh;
 }
 
