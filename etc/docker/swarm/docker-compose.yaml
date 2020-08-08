@@ -16,7 +16,7 @@ configs:
     nginx_conf_www_ports_stable:
         file: /run/configs/nlb/etc/nginx/conf.d/www_ports_stable.conf
     nginx_conf_www:
-        file: /run/configs/nlb/etc/nginx/conf.d/www_stable.conf
+        file: /run/configs/nlb/etc/nginx/conf.d/www.conf
 
 networks:
     alejandro-colomar:

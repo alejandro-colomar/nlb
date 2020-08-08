@@ -1,12 +1,12 @@
 #!/bin/bash -x
-##	./bin/deploy/delete.sh	"<stability>"
+##	sudo ./bin/deploy/swarm/common/switch.sh	<stack_basename> <stability>
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Delete stack
-## ============
+## Switch ${stack_basename} public port to ${stability}
+## ====================================================
 ##
 ################################################################################
 
@@ -16,23 +16,18 @@
 ################################################################################
 source	lib/libalx/sh/sysexits.sh;
 
-source	etc/nlb/config.sh;
+source	etc/www/config.sh;
 
 
 ################################################################################
 ##	definitions							      ##
 ################################################################################
-ARGC=0;
+ARGC=2;
 
 
 ################################################################################
 ##	functions							      ##
 ################################################################################
-function delete_stack()
-{
-
-	docker stack rm "${NLB_STACK_BASENAME}";
-}
 
 
 ################################################################################
@@ -40,8 +35,12 @@ function delete_stack()
 ################################################################################
 function main()
 {
+	local	stack_basename="$1";
+	local	stability="$2";
 
-	delete_stack;
+	./bin/deploy/common/switch	"${stack_basename}" "${stability}";
+	./bin/deploy/swarm/delete.sh;
+	./bin/deploy/swarm/deploy.sh;
 }
 
 
@@ -54,7 +53,7 @@ if [ ${argc} -ne ${ARGC} ]; then
 	exit	${EX_USAGE};
 fi
 
-main;
+main	"$1"	"$2";
 
 
 ################################################################################

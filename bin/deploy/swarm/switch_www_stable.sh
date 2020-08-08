@@ -1,12 +1,12 @@
 #!/bin/bash -x
-##	sudo ./bin/deploy/switch_www_rc.sh
+##	sudo ./bin/deploy/swarm/switch_www_stable.sh
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Switch www public port to rc
-## ============================
+## Switch www public port to stable
+## ================================
 ##
 ################################################################################
 
@@ -34,7 +34,7 @@ ARGC=0;
 function main()
 {
 
-	./bin/deploy/common/switch.sh	"www" "rc";
+	./bin/deploy/swarm/common/switch.sh	"www" "stable";
 }
 
 

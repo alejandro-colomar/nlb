@@ -1,12 +1,12 @@
 #!/bin/bash -x
-##	sudo ./bin/deploy/common/switch.sh	<stack_basename> <stability>
+##	./bin/deploy/swarm/delete.sh
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Switch ${stack_basename} public port to ${stability}
-## ====================================================
+## Delete stack
+## ============
 ##
 ################################################################################
 
@@ -16,26 +16,22 @@
 ################################################################################
 source	lib/libalx/sh/sysexits.sh;
 
-source	etc/www/config.sh;
+source	etc/nlb/config.sh;
 
 
 ################################################################################
 ##	definitions							      ##
 ################################################################################
-ARGC=2;
+ARGC=0;
 
 
 ################################################################################
 ##	functions							      ##
 ################################################################################
-function update_symlink()
+function delete_stack()
 {
-	local	stack_basename="$1";
-	local	stability="$2";
 
-
-	ln -fsvT	"${stack_basename}_${stability}.conf"		\
-			"etc/nginx/conf.d/${stack_basename}.conf";
+	docker stack rm "${NLB_STACK_BASENAME}";
 }
 
 
@@ -44,12 +40,8 @@ function update_symlink()
 ################################################################################
 function main()
 {
-	local	stack_basename="$1";
-	local	stability="$2";
 
-	update_symlink	"${stack_basename}" "${stability}";
-	./bin/deploy/delete.sh;
-	./bin/deploy/deploy.sh;
+	delete_stack;
 }
 
 
@@ -62,7 +54,7 @@ if [ ${argc} -ne ${ARGC} ]; then
 	exit	${EX_USAGE};
 fi
 
-main	"$1"	"$2";
+main;
 
 
 ################################################################################

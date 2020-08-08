@@ -1,12 +1,12 @@
 #!/bin/bash -x
-##	sudo ./bin/deploy.sh
+##	sudo ./bin/deploy/swarm/switch_www_rc.sh
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Deploy stack
-## ============
+## Switch www public port to rc
+## ============================
 ##
 ################################################################################
 
@@ -15,8 +15,6 @@
 ##	source								      ##
 ################################################################################
 source	lib/libalx/sh/sysexits.sh;
-
-source	etc/nlb/config.sh;
 
 
 ################################################################################
@@ -28,11 +26,6 @@ ARGC=0;
 ################################################################################
 ##	functions							      ##
 ################################################################################
-function deploy_stack()
-{
-
-	docker stack deploy -c "${NLB_COMPOSE_FPATH}" ${NLB_STACK_BASENAME}
-}
 
 
 ################################################################################
@@ -41,8 +34,7 @@ function deploy_stack()
 function main()
 {
 
-	./bin/deploy/common/config.sh;
-	deploy_stack;
+	./bin/deploy/swarm/common/switch.sh	"www" "rc";
 }
 
 
