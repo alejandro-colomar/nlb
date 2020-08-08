@@ -16,7 +16,7 @@
 ################################################################################
 source	lib/libalx/sh/sysexits.sh;
 
-source	etc/nlb/config.sh;
+source	lib/nlb/deploy/swarm/deploy.sh;
 
 
 ################################################################################
@@ -28,11 +28,6 @@ ARGC=0;
 ################################################################################
 ##	functions							      ##
 ################################################################################
-function deploy_stack()
-{
-
-	docker stack deploy -c "${NLB_COMPOSE_FPATH}" ${NLB_STACK_BASENAME}
-}
 
 
 ################################################################################
@@ -41,8 +36,7 @@ function deploy_stack()
 function main()
 {
 
-	./bin/deploy/common/config.sh;
-	deploy_stack;
+	swarm_deploy;
 }
 
 

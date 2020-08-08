@@ -1,5 +1,3 @@
-#!/bin/bash -x
-##	sudo ./bin/deploy/common/switch.sh	<stack_basename> <stability>
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
@@ -14,56 +12,29 @@
 ################################################################################
 ##	source								      ##
 ################################################################################
-source	lib/libalx/sh/sysexits.sh;
-
-source	etc/www/config.sh;
+source	lib/nlb/deploy/common/switch.sh;
+source	lib/nlb/deploy/swarm/delete.sh;
+source	lib/nlb/deploy/swarm/deploy.sh;
 
 
 ################################################################################
 ##	definitions							      ##
 ################################################################################
-ARGC=2;
 
 
 ################################################################################
 ##	functions							      ##
 ################################################################################
-function update_symlink()
+## sudo
+function swarm_switch()
 {
 	local	stack_basename="$1";
 	local	stability="$2";
 
-
-	ln -fsvT	"${stack_basename}_${stability}.conf"		\
-			"etc/nginx/conf.d/${stack_basename}.conf";
+	update_nginx_symlink	"${stack_basename}" "${stability}";
+	swarm_delete;
+	swarm_deploy;
 }
-
-
-################################################################################
-##	main								      ##
-################################################################################
-function main()
-{
-	local	stack_basename="$1";
-	local	stability="$2";
-
-	update_symlink	"${stack_basename}" "${stability}";
-	./bin/deploy/delete.sh;
-	./bin/deploy/deploy.sh;
-}
-
-
-################################################################################
-##	run								      ##
-################################################################################
-argc=$#;
-if [ ${argc} -ne ${ARGC} ]; then
-	echo	"Illegal number of parameters (Requires ${ARGC})";
-	exit	${EX_USAGE};
-fi
-
-main	"$1"	"$2";
-
 
 ################################################################################
 ##	end of file							      ##
