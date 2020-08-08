@@ -30,7 +30,7 @@ function swarm_deploy()
 {
 
 	prepare_configs;
-	prepare_secrets;
+	#prepare_secrets;
 	docker stack deploy -c "${NLB_COMPOSE_FPATH}" "${NLB_STACK_BASENAME}";
 }
 
