@@ -13,8 +13,7 @@
 ##	source								      ##
 ################################################################################
 source	lib/nlb/deploy/common/switch.sh;
-source	lib/nlb/deploy/swarm/delete.sh;
-source	lib/nlb/deploy/swarm/deploy.sh;
+source	lib/nlb/deploy/swarm/update.sh;
 
 
 ################################################################################
@@ -32,8 +31,7 @@ function swarm_switch()
 	local	stability="$2";
 
 	update_nginx_symlink	"${stack_basename}" "${stability}";
-	swarm_delete;
-	swarm_deploy;
+	swarm_update;
 }
 
 ################################################################################
