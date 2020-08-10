@@ -17,7 +17,6 @@ NLB_CONFIG_H="/etc/nlb/config.sh included";
 ################################################################################
 ##	definitions							      ##
 ################################################################################
-NLB_COMPOSE_FPATH="etc/docker/swarm/docker-compose.yaml";
 NLB_STACK_BASENAME="nlb";
 
 

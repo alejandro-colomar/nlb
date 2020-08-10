@@ -13,7 +13,6 @@
 ##	source								      ##
 ################################################################################
 source	etc/nlb/config.sh;
-
 source	lib/nlb/deploy/common/config.sh
 
 
@@ -28,10 +27,12 @@ source	lib/nlb/deploy/common/config.sh
 ## sudo
 function swarm_deploy()
 {
+	local	compose_path="etc/docker/swarm/docker-compose.yaml";
 
 	prepare_configs;
 	#prepare_secrets;
-	docker stack deploy -c "${NLB_COMPOSE_FPATH}" "${NLB_STACK_BASENAME}";
+
+	docker stack deploy -c "${compose_path}" "${NLB_STACK_BASENAME}";
 }
 
 
