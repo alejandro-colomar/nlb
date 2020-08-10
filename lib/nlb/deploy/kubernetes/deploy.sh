@@ -14,6 +14,7 @@
 ################################################################################
 source	etc/nlb/config.sh;
 source	lib/nlb/deploy/common/config.sh;
+source	lib/www/deploy/kubernetes/config.sh;
 
 
 ################################################################################
