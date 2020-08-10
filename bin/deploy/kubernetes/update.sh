@@ -1,10 +1,12 @@
+#!/bin/bash -x
+##	sudo ./bin/deploy/kubernetes/update.sh
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Generate the config maps
-## ========================
+## Update stack
+## ============
 ##
 ################################################################################
 
@@ -12,47 +14,42 @@
 ################################################################################
 ##	source								      ##
 ################################################################################
+source	lib/libalx/sh/sysexits.sh;
+
+source	lib/nlb/deploy/kubernetes/update.sh;
 
 
 ################################################################################
 ##	definitions							      ##
 ################################################################################
+ARGC=0;
 
 
 ################################################################################
 ##	functions							      ##
 ################################################################################
-## sudo
-function kube_create_configmaps()
+
+
+################################################################################
+##	main								      ##
+################################################################################
+function main()
 {
-	local	namespace="$1";
 
-	kubectl create configmap "etc-nginx-cm"				\
-		--from-file "/run/configs/nlb/etc/nginx/nginx.conf"	\
-		-n "${namespace}";
-
-	kubectl create configmap "etc-nginx-confd-cm"			\
-		--from-file "/run/configs/nlb/etc/nginx/conf.d/nlb.conf" \
-		--from-file "/run/configs/nlb/etc/nginx/conf.d/www.conf" \
-		--from-file "/run/configs/nlb/etc/nginx/conf.d/www_ports_exp.conf" \
-		--from-file "/run/configs/nlb/etc/nginx/conf.d/www_ports_rc.conf" \
-		--from-file "/run/configs/nlb/etc/nginx/conf.d/www_ports_stable.conf" \
-		-n "${namespace}";
+	kube_update_hard;
 }
 
-## sudo
-function kube_delete_configmaps()
-{
-	local	namespace="$1";
 
-	kubectl delete configmap "etc-nginx-cm" -n "${namespace}";
-	kubectl delete configmap "etc-nginx-confd-cm" -n "${namespace}";
-}
+################################################################################
+##	run								      ##
+################################################################################
+argc=$#;
+if [ ${argc} -ne ${ARGC} ]; then
+	echo	"Illegal number of parameters (Requires ${ARGC})";
+	exit	${EX_USAGE};
+fi
 
-## sudo
-#function create_secrets()
-#{
-#}
+main;
 
 
 ################################################################################

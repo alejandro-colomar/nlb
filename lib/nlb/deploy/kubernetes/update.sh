@@ -25,8 +25,30 @@ source	lib/nlb/deploy/kubernetes/deploy.sh;
 ################################################################################
 ##	functions							      ##
 ################################################################################
+function kube_update__()
+{
+
+	kubectl delete -f "etc/docker/kubernetes/service.yaml" -n "${namespace}";
+	kubectl delete -f "etc/docker/kubernetes/network-policy.yaml" -n "${namespace}";
+	kubectl delete -f "etc/docker/kubernetes/deployment.yaml" -n "${namespace}";
+	kube_delete_configmaps	"${namespace}";
+
+	kube_create_configmaps	"${namespace}";
+	kubectl apply -f "etc/docker/kubernetes/deployment.yaml" -n "${namespace}";
+	kubectl apply -f "etc/docker/kubernetes/network-policy.yaml" -n "${namespace}";
+	kubectl apply -f "etc/docker/kubernetes/service.yaml" -n "${namespace}";
+}
+
 ## sudo
 function kube_update()
+{
+
+	prepare_configs							&& \
+	kube_update__;
+}
+
+## sudo
+function kube_update_hard()
 {
 
 	prepare_configs							&& \
