@@ -1,0 +1,25 @@
+################################################################################
+##      Copyright (C) 2020        Sebastian Francisco Colomar Bauza           ##
+##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
+##      SPDX-License-Identifier:  GPL-2.0-only                                ##
+################################################################################
+
+apiVersion: v1
+kind: Service
+metadata:
+    name: nlb
+spec:
+    ports:
+    -
+        nodePort: 30080
+        port: 30080
+    -
+        nodePort: 31080
+        port: 31080
+    -
+        nodePort: 32080
+        port: 32080
+    selector:
+        service: nlb-svc
+    type: NodePort
+
