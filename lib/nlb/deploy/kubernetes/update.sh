@@ -13,7 +13,7 @@
 ##	source								      ##
 ################################################################################
 source	lib/nlb/deploy/common/config.sh;
-source	lib/www/deploy/kubernetes/config.sh;
+source	lib/nlb/deploy/kubernetes/config.sh;
 source	lib/nlb/deploy/kubernetes/delete.sh;
 source	lib/nlb/deploy/kubernetes/deploy.sh;
 
