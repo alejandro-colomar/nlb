@@ -5,17 +5,17 @@
 ################################################################################
 
 configs:
-    nginx_conf:
+    etc-nginx-nginx-conf-nlb-config:
         file: /run/configs/nlb/etc/nginx/nginx.conf
-    nginx_conf_nlb:
+    etc-nginx-conf-d-nlb-conf-nlb-config:
         file: /run/configs/nlb/etc/nginx/conf.d/nlb.conf
-    nginx_conf_www_ports_exp:
+    etc-nginx-conf-d-www-ports-exp-conf-nlb-config:
         file: /run/configs/nlb/etc/nginx/conf.d/www_ports_exp.conf
-    nginx_conf_www_ports_rc:
+    etc-nginx-conf-d-www-ports-rc-conf-nlb-config:
         file: /run/configs/nlb/etc/nginx/conf.d/www_ports_rc.conf
-    nginx_conf_www_ports_stable:
+    etc-nginx-conf-d-www-ports-stable-conf-nlb-config:
         file: /run/configs/nlb/etc/nginx/conf.d/www_ports_stable.conf
-    nginx_conf_www:
+    etc-nginx-conf-d-www-conf-nlb-config:
         file: /run/configs/nlb/etc/nginx/conf.d/www.conf
 
 networks:
@@ -26,34 +26,36 @@ services:
         configs:
         -
             mode: 0440
-            source: nginx_conf
-            target: /usr/local/etc/nginx/nginx.conf
+            source:  etc-nginx-nginx-conf-nlb-config
+            target: /etc/nginx/nginx.conf
         -
             mode: 0440
-            source: nginx_conf_nlb
-            target: /usr/local/etc/nginx/conf.d/nlb.conf
+            source:  etc-nginx-conf-d-nlb-conf-nlb-config
+            target: /etc/nginx/conf.d/nlb.conf
         -
             mode: 0440
-            source: nginx_conf_www_ports_exp
-            target: /usr/local/etc/nginx/conf.d/www_ports_exp.conf
+            source:  etc-nginx-conf-d-www-ports-exp-conf-nlb-config
+            target: /etc/nginx/conf.d/www_ports_exp.conf
         -
             mode: 0440
-            source: nginx_conf_www_ports_rc
-            target: /usr/local/etc/nginx/conf.d/www_ports_rc.conf
+            source:  etc-nginx-conf-d-www-ports-rc-conf-nlb-config
+            target: /etc/nginx/conf.d/www_ports_rc.conf
         -
             mode: 0440
-            source: nginx_conf_www_ports_stable
-            target: /usr/local/etc/nginx/conf.d/www_ports_stable.conf
+            source:  etc-nginx-conf-d-www-ports-stable-conf-nlb-config
+            target: /etc/nginx/conf.d/www_ports_stable.conf
         -
             mode: 0440
-            source: nginx_conf_www
-            target: /usr/local/etc/nginx/conf.d/www.conf
+            source:  etc-nginx-conf-d-www-conf-nlb-config
+            target: /etc/nginx/conf.d/www.conf
         deploy:
             placement:
                 constraints:
                 -   node.role == worker
             replicas: 3
-        image: "alejandrocolomar/nginx:1.9.1-custom"
+            restart_policy:
+                condition: any
+        image: "alejandrocolomar/nginx:1.9.3-2"
         networks:
         -
             "alejandro-colomar"

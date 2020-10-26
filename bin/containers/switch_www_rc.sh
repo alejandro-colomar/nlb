@@ -1,5 +1,4 @@
 #!/bin/bash -x
-##	sudo ./bin/deploy/swarm/switch_www_rc.sh
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
@@ -16,13 +15,13 @@
 ################################################################################
 source	lib/libalx/sh/sysexits.sh;
 
-source	lib/nlb/deploy/swarm/switch.sh;
+source	lib/nlb/switch.sh;
 
 
 ################################################################################
 ##	definitions							      ##
 ################################################################################
-ARGC=0;
+ARGC=1;
 
 
 ################################################################################
@@ -36,8 +35,9 @@ ARGC=0;
 ## sudo
 function main()
 {
+	local	mode="$1";
 
-	swarm_switch	"www" "rc";
+	stack_switch	"${mode}" "www" "rc";
 }
 
 
@@ -50,7 +50,7 @@ if [ ${argc} -ne ${ARGC} ]; then
 	exit	${EX_USAGE};
 fi
 
-main;
+main	"$1";
 
 
 ################################################################################

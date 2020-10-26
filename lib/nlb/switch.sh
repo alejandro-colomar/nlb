@@ -3,8 +3,8 @@
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Update stack
-## ============
+## Switch ${stack_basename} public port to ${stability}
+## ====================================================
 ##
 ################################################################################
 
@@ -12,10 +12,7 @@
 ################################################################################
 ##	source								      ##
 ################################################################################
-source	lib/nlb/deploy/common/config.sh;
-source	lib/nlb/deploy/kubernetes/config.sh;
-source	lib/nlb/deploy/kubernetes/delete.sh;
-source	lib/nlb/deploy/kubernetes/deploy.sh;
+source /usr/local/lib/libalx/sh/containers.sh;
 
 
 ################################################################################
@@ -26,37 +23,29 @@ source	lib/nlb/deploy/kubernetes/deploy.sh;
 ################################################################################
 ##	functions							      ##
 ################################################################################
-function kube_update__()
+function update_nginx_symlink__()
 {
+	local	stack_basename="$1";
+	local	stability="$2";
 
-	kubectl delete -f "etc/docker/kubernetes/service.yaml" -n "${namespace}";
-	kubectl delete -f "etc/docker/kubernetes/network-policy.yaml" -n "${namespace}";
-	kubectl delete -f "etc/docker/kubernetes/deployment.yaml" -n "${namespace}";
-	kube_delete_configmaps	"${namespace}";
 
-	kube_create_configmaps	"${namespace}";
-	kubectl apply -f "etc/docker/kubernetes/deployment.yaml" -n "${namespace}";
-	kubectl apply -f "etc/docker/kubernetes/network-policy.yaml" -n "${namespace}";
-	kubectl apply -f "etc/docker/kubernetes/service.yaml" -n "${namespace}";
+	ln -fsvT	"${stack_basename}_${stability}.conf"		\
+			"etc/nginx/conf.d/${stack_basename}.conf";
 }
 
 ## sudo
-function kube_update()
+function stack_switch()
 {
+	local	mode="$1";
+	local	stack_basename="$2";
+	local	stability="$3";
+	local	nlb_project="${NLB_PROJECT}";
+	local	nlb_stack="${NLB_STACK}";
 
-	prepare_configs							&& \
-	kube_update__;
+	update_nginx_symlink	"${stack_basename}" "${stability}";
+	alx_stack_delete	"${mode}" "${nlb_stack}";
+	alx_stack_deploy	"${mode}" "${nlb_project}" "${nlb_stack}";
 }
-
-## sudo
-function kube_update_hard()
-{
-
-	prepare_configs							&& \
-	kube_delete							&& \
-	kube_deploy;
-}
-
 
 ################################################################################
 ##	end of file							      ##

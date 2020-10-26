@@ -1,9 +1,10 @@
+#!/bin/bash -x
 ################################################################################
 ##      Copyright (C) 2020        Alejandro Colomar Andrés                    ##
 ##      SPDX-License-Identifier:  GPL-2.0-only                                ##
 ################################################################################
 ##
-## Deploy stack
+## Delete stack
 ## ============
 ##
 ################################################################################
@@ -12,30 +13,50 @@
 ################################################################################
 ##	source								      ##
 ################################################################################
+source	/usr/local/lib/libalx/sh/containers.sh;
+source	/usr/local/lib/libalx/sh/sysexits.sh;
+
 source	etc/nlb/config.sh;
-source	lib/nlb/deploy/common/config.sh;
-source	lib/www/deploy/kubernetes/config.sh;
 
 
 ################################################################################
 ##	definitions							      ##
 ################################################################################
+ARGC=1;
 
 
 ################################################################################
 ##	functions							      ##
 ################################################################################
-## sudo
-function kube_deploy()
-{
-	local	namespace="${NLB_STACK_BASENAME}";
 
-	kubectl create namespace "${namespace}";
-	kube_create_configmaps	"${namespace}";
-	kubectl apply -f "etc/docker/kubernetes/deployment.yaml" -n "${namespace}";
-	kubectl apply -f "etc/docker/kubernetes/network-policy.yaml" -n "${namespace}";
-	kubectl apply -f "etc/docker/kubernetes/service.yaml" -n "${namespace}";
+
+################################################################################
+##	main								      ##
+################################################################################
+function main()
+{
+	local	mode="$1";
+	local	stack="${NLB_STACK}";
+
+	alx_stack_delete	"${mode}" "${stack}";
 }
+
+
+################################################################################
+##	run								      ##
+################################################################################
+argc=$#;
+if [ ${argc} -ne ${ARGC} ]; then
+	echo >&2							\
+'Usage: ./bin/containers/delete mode
+Mode:
+	kubernetes
+	openshift
+	swarm';
+	exit	${EX_USAGE};
+fi
+
+main	"$1";
 
 
 ################################################################################
