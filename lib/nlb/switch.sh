@@ -44,7 +44,7 @@ function stack_switch()
 	local	nlb_project="${NLB_PROJECT}";
 	local	nlb_stack="${NLB_STACK}";
 
-	update_nginx_symlink	"${stack_basename}" "${stability}";
+	update_nginx_symlink__	"${stack_basename}" "${stability}";
 	alx_stack_delete	"${mode}" "${nlb_stack}";
 	alx_stack_deploy	"${mode}" "${nlb_project}" "${nlb_stack}";
 }
