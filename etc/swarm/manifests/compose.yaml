@@ -9,10 +9,8 @@ configs:
         file: /run/configs/nlb/etc/nginx/nginx.conf
     etc-nginx-conf-d-nlb-conf-nlb-config:
         file: /run/configs/nlb/etc/nginx/conf.d/nlb.conf
-    etc-nginx-conf-d-www-ports-exp-conf-nlb-config:
-        file: /run/configs/nlb/etc/nginx/conf.d/www_ports_exp.conf
-    etc-nginx-conf-d-www-ports-rc-conf-nlb-config:
-        file: /run/configs/nlb/etc/nginx/conf.d/www_ports_rc.conf
+    etc-nginx-conf-d-www-ports-test-conf-nlb-config:
+        file: /run/configs/nlb/etc/nginx/conf.d/www_ports_test.conf
     etc-nginx-conf-d-www-ports-stable-conf-nlb-config:
         file: /run/configs/nlb/etc/nginx/conf.d/www_ports_stable.conf
     etc-nginx-conf-d-www-conf-nlb-config:
@@ -34,12 +32,8 @@ services:
             target: /etc/nginx/conf.d/nlb.conf
         -
             mode: 0440
-            source:  etc-nginx-conf-d-www-ports-exp-conf-nlb-config
-            target: /etc/nginx/conf.d/www_ports_exp.conf
-        -
-            mode: 0440
-            source:  etc-nginx-conf-d-www-ports-rc-conf-nlb-config
-            target: /etc/nginx/conf.d/www_ports_rc.conf
+            source:  etc-nginx-conf-d-www-ports-test-conf-nlb-config
+            target: /etc/nginx/conf.d/www_ports_test.conf
         -
             mode: 0440
             source:  etc-nginx-conf-d-www-ports-stable-conf-nlb-config
@@ -49,20 +43,20 @@ services:
             source:  etc-nginx-conf-d-www-conf-nlb-config
             target: /etc/nginx/conf.d/www.conf
         deploy:
+            mode: replicated
             placement:
                 constraints:
                 -   node.role == worker
-            replicas: 3
+            replicas: 1
             restart_policy:
                 condition: any
-        image: "alejandrocolomar/nginx:1.9.3-2"
+        image: "docker.io/alejandrocolomar/nginx:1.16.0@sha256:34c652cbc41b0c09daab213282ab0af88d4a55dd532a98458e221035bdfa6d0d"
         networks:
         -
             "alejandro-colomar"
         ports:
         -   "30080:30080"
         -   "31080:31080"
-        -   "32080:32080"
         volumes:
         -   nlb:/var/log/nginx
 

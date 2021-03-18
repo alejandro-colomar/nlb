@@ -7,35 +7,35 @@ on:
 jobs:
 
     swarm:
-        env:
-            compose: etc/docker/swarm/compose.yaml
-            mode: swarm
         runs-on: ubuntu-20.04
         steps:
         -
-            name: clone libalx
-            run: sudo git -C /usr/local/src clone http://github.com/alejandro-colomar/libalx.git;
+            name: git clone alejandro-colomar/containers
+            run: |
+                sudo git -C /usr/local/src \
+                        clone --single-branch --branch 'v0.4.1' \
+                        http://github.com/alejandro-colomar/containers.git;
         -
-            name: install libalx
-            run: sudo make -C /usr/local/src/libalx install-sh;
+            name: make swarm
+            run: sudo make -C /usr/local/src/containers swarm;
         -
             name: checkout
             uses: actions/checkout@v2
         -
-            name: init swarm
-            run: docker swarm init;
+            name: docker swarm init
+            run: docker swarm init --advertise-addr lo;
         -
-            name: Fix swarm compose for a single machine
-            run: sed -i "s/worker/manager/" "${compose}";
+            name: sed
+            run: sed -i "s/worker/manager/" etc/swarm/manifests/compose.yaml;
         -
-            name: deploy
-            run: sudo ./bin/containers/deploy.sh "${mode}";
+            name: make stack-deploy
+            run: sudo make stack-deploy;
         -
-            name: wait Up
+            name: docker service ls
             run: |
                 while true; do
                     sleep 1;
-                    docker service ls |                                 \
-                            grep '\([0-9]\)/\1' &&                      \
-                            break;
-                done
+                    docker service ls \
+                    |grep '\([0-9]\)/\1' \
+                        && break;
+                done;
