@@ -29,7 +29,7 @@ digest:
 .PHONY: www-stable
 .PHONY: www-test
 www-stable www-test: www-%:
-	ln -fsvT 'www_$*.conf' $(CURDIR)/etc/nginx/www.conf;
+	ln -fsvT 'www_$*.conf' $(CURDIR)/etc/nginx/conf.d/www.conf;
 
 .PHONY: stack-deploy
 stack-deploy:
