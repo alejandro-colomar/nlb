@@ -32,7 +32,7 @@ www-stable www-test: www-%:
 	ln -fsvT 'www_$*.conf' $(CURDIR)/etc/nginx/conf.d/www.conf;
 
 .PHONY: stack-deploy
-stack-deploy:
+stack-deploy: digest
 	@echo '	STACK deploy	$(orchestrator) $(stack)';
 	@alx_stack_deploy -o '$(orchestrator)' '$(stack)';
 

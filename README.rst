@@ -6,17 +6,6 @@ ________________________________________________________________________________
 Deployment
 ==========
 
-Update the digest in the manifests to match the current architecture.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Run this before any of the other commands.  Re-run this after checking out
-any git commit, because the default digest may be the digest of a different
-architecture.
-
-.. code-block:: BASH
-
-	make digest;
-
 Deploy with default values (stable)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
